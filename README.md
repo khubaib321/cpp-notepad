@@ -6,4 +6,5 @@
 - Notepad for taking down notes.
 - Real-time spellchecker to check for spelling mistakes.
 - Supports only English language as of now.
+- Supports only alphabetic words as of now.
 - Work in progress.
