@@ -5,5 +5,5 @@
 ## Features
 - Notepad for taking down notes.
 - Real-time spell-checker to check for spelling mistakes.
-- Supports only English as of now.
-
+- Supports only English language as of now.
+- Work in progress.
