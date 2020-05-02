@@ -5,14 +5,14 @@
 #include <iostream>
 #include "Dictionary.h"
 
-Dictionary::Dictionary() : alphabets(26) {
-    this->words = new DictNode[alphabets];
+Dictionary::Dictionary() : uniqueAlphabets(26) {
+    this->words = new DictNode[this->uniqueAlphabets];
 }
 
 void Dictionary::print() {
     std::cout << "ALL LOADED WORDS =>" << std::endl;
 
-    for (int i=0; i < this->alphabets; ++i) {
+    for (int i=0; i < this->uniqueAlphabets; ++i) {
         this->words[i].printBranch();
         std::cout << std::endl;
     }
@@ -38,7 +38,7 @@ void Dictionary::loadFromFile(const char* filePath) {
 int Dictionary::calculateWordIndex(const char _char) {
     // O(1) operation.
     // Calculates an index where _char should be stored.
-    // Index should be in range (0, this->width) for a valid word character.
+    // Index should be in range (0, this->uniqueAlphabets) for a valid word character.
 
     int ascii, normalized_ascii = (int) _char;
     if (ascii >= 65 && ascii <= 90) normalized_ascii += 32;
@@ -46,10 +46,9 @@ int Dictionary::calculateWordIndex(const char _char) {
 }
 
 bool Dictionary::isValidWordIndex(const int index) {
-    return index >= 0 && index < this->words->getWidth();
+    return index >= 0 && index < this->uniqueAlphabets;
 }
 
 Dictionary::~Dictionary() {
     delete [] this->words;
 }
-

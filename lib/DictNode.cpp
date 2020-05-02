@@ -3,13 +3,12 @@
 //
 
 #include <iostream>
-#include "DictNote.h"
+#include "DictNode.h"
 
 DictNode::DictNode() : width(26) {
-
-    this->wordEnds = false;
     this->_char = 0;
     this->initBranches();
+    this->wordEnds = false;
 }
 
 void DictNode::initBranches() {
@@ -22,15 +21,14 @@ void DictNode::initBranches() {
     }
 }
 
-bool DictNode::isValidNode() {
-    return this->_char != 0;
-}
-
 void DictNode::loadWordAlpha(const char* word) {
-    if (!word || *word == 0) return;
+    // Recursively loads a word character by character.
+    // Each character is stored at a specific node calculated by hash method.
+    // If that node is already created then it moves forward to store the next
+    // character. The last character in word is stored, marks the ending of a word.
 
+    if (!word || *word == 0) return;
     this->_char = *word;
-    // find suitable index
     int index = this->calculateBranchIndex(*(word + 1));
     DictNode* node = this->getBranchNode(index);
     if (node) node->loadWordAlpha(word + 1); else this->wordEnds = true;
@@ -59,35 +57,35 @@ bool DictNode::isValidBranchIndex(const int index) {
     return index >= 0 && index < this->width;
 }
 
-int DictNode::getWidth() {
-    return this->width;
-}
-
 bool DictNode::searchBranch(const char* word) {
-    // If searching null/empty word.
+    // Recursive search character by character.
+    // O(1) operation. Takes as long as the longest word in dictionary.
+
     char _char = *word;
     char next_char = *(word + 1);
     if (!word || _char == 0) return false;
-    // If first character matches and search string ends.
+    if (next_char == 0 && this->wordEnds) return true;
+
+    // If none of above, then repeat above steps with next word character.
     int index = this->calculateBranchIndex(next_char);
     bool hasNextBranch = this->isValidBranchIndex(index) && this->branches[index];
-    if (this->_char == _char && next_char == 0 && this->wordEnds) return true;
-    // If none of above, then repeat above steps with next word character.
     return (hasNextBranch && this->branches[index]->searchBranch(word + 1));
 }
 
 void DictNode::printBranch() {
     // Does not work properly. Figure out a way to print
     // all branch words e.g, test, tested, testing, etc.
-    bool hasBranch = false;
+
     std::cout << this->_char;
+    bool hasNextBranch = false;
+
     for (int i=0; i < this->width; ++i) {
         if (this->branches[i]) {
-            hasBranch = true;
+            hasNextBranch = true;
             this->branches[i]->printBranch();
         }
     }
-    if (!hasBranch) std::cout << ", ";
+    if (!hasNextBranch) std::cout << ", ";
 }
 
 DictNode::~DictNode() {

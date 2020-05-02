@@ -5,11 +5,14 @@
 #ifndef CPP_NOTEPAD_DICTIONARY_H
 #define CPP_NOTEPAD_DICTIONARY_H
 
-#include "DictNote.h"
+#include "DictNode.h"
 
 class Dictionary {
     DictNode* words;
-    const int alphabets;
+    const int uniqueAlphabets;
+
+    bool isValidWordIndex(const int);
+    int calculateWordIndex(const char);
 
 public:
     Dictionary();
@@ -17,8 +20,6 @@ public:
     void loadWord(const char*);
     bool searchWord(const char*);
     void loadFromFile(const char*);
-    bool isValidWordIndex(const int);
-    int calculateWordIndex(const char);
     ~Dictionary();
 };
 
