@@ -57,7 +57,11 @@ int DictNode::calculateBranchIndex(const char _char) {
  */
 DictNode *DictNode::getBranchNode(const int index) {
     if (!this->isValidBranchIndex(index)) return nullptr;
-    if (!this->branches[index]) this->branches[index] = new DictNode;
+    
+    if (!this->branches[index]) {
+        this->branches[index] = new DictNode;
+    }
+    
     return this->branches[index];
 }
 
