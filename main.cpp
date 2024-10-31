@@ -10,16 +10,6 @@ int main() {
     Dictionary dict;
     dict.loadFromFile("./res/words_unix.txt");
     dict.loadFromFile("./res/words_alpha.txt");
-    // dict.loadWord("alpha");
-    // dict.loadWord("apple");
-    // dict.loadWord("banana");
-    // dict.loadWord("carrot");
-    // dict.loadWord("donut");
-    // dict.loadWord("guava");
-    // dict.loadWord("mango");
-    // dict.loadWord("tested");
-    // dict.loadWord("testing");
-    // dict.print();
 
     cout << "Loaded " << dict.getWordCount() << " words." << endl;
 
