@@ -30,6 +30,8 @@ void Dictionary::print() {
  */
 void Dictionary::loadWord(const char* word) {
     if (!word || *word == 0) return;
+    if (this->searchWord(word)) return;
+
     int index = this->calculateWordIndex(*word);
 
     if (this->isValidWordIndex(index)) {
@@ -54,6 +56,10 @@ bool Dictionary::searchWord(const char* word) {
     return false;
 }
 
+int Dictionary::getWordCount() {
+    return this->wordCount;
+}
+
 bool Dictionary::loadFromFile(const string filePath) {
     ifstream file(filePath);
 
@@ -67,12 +73,11 @@ bool Dictionary::loadFromFile(const string filePath) {
         // Strip and turn to lower case.
         line.erase(remove(line.begin(), line.end(), ' '), line.end());
         transform(line.begin(), line.end(), line.begin(), ::tolower);
+
         this->loadWord(line.c_str());
     }
 
     file.close();
-
-    cout << "Loaded " << this->wordCount << " words." << endl;
     return true;
 }
 

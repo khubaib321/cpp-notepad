@@ -6,6 +6,7 @@ using namespace std;
 
 int main() {
     Dictionary dict;
+    dict.loadFromFile("./res/words_unix.txt");
     dict.loadFromFile("./res/words_alpha.txt");
     // dict.loadWord("alpha");
     // dict.loadWord("apple");
@@ -17,6 +18,8 @@ int main() {
     // dict.loadWord("tested");
     // dict.loadWord("testing");
     // dict.print();
+
+    cout << "Loaded " << dict.getWordCount() << " words." << endl;
 
     const char* searchWords[] = {
         "donut",

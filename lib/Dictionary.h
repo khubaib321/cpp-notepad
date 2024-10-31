@@ -19,6 +19,7 @@ public:
     Dictionary();
     void print();
     void loadWord(const char*);
+    int getWordCount();
     bool searchWord(const char*);
     bool loadFromFile(const string);
     ~Dictionary();
