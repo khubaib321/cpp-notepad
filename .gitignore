@@ -4,3 +4,4 @@ CMakeLists.txt
 .idea/*
 .DS_Store*
 cmake-build-*
+main-o

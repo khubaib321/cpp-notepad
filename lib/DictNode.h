@@ -1,9 +1,7 @@
-//
-// Created by KhubaibAfzal on 02/05/2020.
-//
-
 #ifndef CPP_NOTEPAD_DICTNODE_H
 #define CPP_NOTEPAD_DICTNODE_H
+#include <string>
+using namespace std;
 
 class DictNode {
 
@@ -19,9 +17,9 @@ class DictNode {
 
 public:
     DictNode();
-    void loadWordAlpha(const char*);
+    bool loadWordAlpha(const char*);
     bool searchBranch(const char*);
-    void printBranch();
+    void printBranch(const string = "");
     ~DictNode();
 };
 

@@ -1,14 +1,15 @@
-//
-// Created by KhubaibAfzal on 02/05/2020.
-//
-
 #ifndef CPP_NOTEPAD_DICTIONARY_H
 #define CPP_NOTEPAD_DICTIONARY_H
 
 #include "DictNode.h"
+#include <string>
+
+using namespace std;
 
 class Dictionary {
     DictNode* words;
+    
+    int wordCount;
     const int uniqueAlphabets;
 
     bool isValidWordIndex(const int);
@@ -19,7 +20,7 @@ public:
     void print();
     void loadWord(const char*);
     bool searchWord(const char*);
-    void loadFromFile(const char*);
+    bool loadFromFile(const string);
     ~Dictionary();
 };
 

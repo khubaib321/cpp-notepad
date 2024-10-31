@@ -1,48 +1,88 @@
-//
-// Created by KhubaibAfzal on 02/05/2020.
-//
-
+#include <string>
+#include <fstream>
 #include <iostream>
+#include <algorithm>
 #include "Dictionary.h"
 
+using namespace std;
+
 Dictionary::Dictionary() : uniqueAlphabets(26) {
+    this->wordCount = 0;
     this->words = new DictNode[this->uniqueAlphabets];
 }
 
 void Dictionary::print() {
-    std::cout << "ALL LOADED WORDS =>" << std::endl;
+    const string title = " DICTIONARY ";
+    const string divider = " ========== ";
+    
+    cout << divider << title << this->wordCount << divider << endl;
 
     for (int i=0; i < this->uniqueAlphabets; ++i) {
         this->words[i].printBranch();
-        std::cout << std::endl;
     }
+
+    cout << divider << title << this->wordCount << divider << endl;
 }
 
+/**
+ * Load a word character by character.
+ * Takes as long as the length of the word.
+ */
 void Dictionary::loadWord(const char* word) {
     if (!word || *word == 0) return;
     int index = this->calculateWordIndex(*word);
-    if (this->isValidWordIndex(index)) this->words[index].loadWordAlpha(word);
+
+    if (this->isValidWordIndex(index)) {
+        if (this->words[index].loadWordAlpha(word)) {
+            ++this->wordCount;
+        }
+        
+    }
 }
 
+/**
+ * Use first character to determine where to start the search from.
+ * Then traverse the branch at that index and keep searching character by character.
+ */
 bool Dictionary::searchWord(const char* word) {
     int index = this->calculateWordIndex(*word);
-    if (this->isValidWordIndex(index)) return this->words[index].searchBranch(word);
-    std::cout << "Not a valid English word." << std::endl;
+    
+    if (this->isValidWordIndex(index)) {
+        return this->words[index].searchBranch(word);
+    }
+    
     return false;
 }
 
-void Dictionary::loadFromFile(const char* filePath) {
+bool Dictionary::loadFromFile(const string filePath) {
+    ifstream file(filePath);
 
+    if (!file.is_open()) {
+        cerr << "Failed to open the file at: " << filePath << endl;
+        return false;
+    }
+
+    string line;
+    while (getline(file, line)) {
+        // Strip and turn to lower case.
+        line.erase(remove(line.begin(), line.end(), ' '), line.end());
+        transform(line.begin(), line.end(), line.begin(), ::tolower);
+        this->loadWord(line.c_str());
+    }
+
+    file.close();
+
+    cout << "Loaded " << this->wordCount << " words." << endl;
+    return true;
 }
 
+/**
+ * Calculates an index where _char should be stored.
+ * Index should be in range (0, this->uniqueAlphabets) for a valid word character.
+ */
 int Dictionary::calculateWordIndex(const char _char) {
-    // O(1) operation.
-    // Calculates an index where _char should be stored.
-    // Index should be in range (0, this->uniqueAlphabets) for a valid word character.
-
-    int ascii, normalized_ascii = (int) _char;
-    if (ascii >= 65 && ascii <= 90) normalized_ascii += 32;
-    return normalized_ascii - 97;
+    int ascii = (int) tolower(_char);
+    return ascii - 97;
 }
 
 bool Dictionary::isValidWordIndex(const int index) {
