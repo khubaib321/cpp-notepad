@@ -9,4 +9,4 @@
 - Supports only English language as of now.
 - Supports only alphabetic words as of now.
 - Work in progress (since forever).
-- A bit of a burden on system memory.
+- A bit of a burden on system memory, but it is fast ¯\\\_(ツ)_/¯   .
